@@ -1,0 +1,26 @@
+swagger: '2.0'
+info:
+  description: "Administra a movimentação bancária do correntista e controla o acesso através de CPF e senha."
+  version: "1.0.0"
+  title: "Banco Digital API"
+  termsOfService: "http:localhost:8085/banco-digital-api/v1/termo-uso"
+  contact:
+    name: "Suporte"
+    url: "http:localhost:8085/banco-digital-api/v1/suporte"
+    email: "suporte@bancodigitalapi.com"
+host: "localhost:8085"
+basePath: "/banco-digital-api/v1"
+schemes:
+ - https
+ - http
+tags:
+  - name: "Correntista"
+  - name: "Favorecido"
+  - name: "Conta"
+  - name: "Transacao"
+  - name: "Extrato"
+securityDefinitions:
+  BasicAuth:
+    type: basic
+security: 
+  - BasicAuth: []
