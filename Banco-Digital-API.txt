@@ -24,7 +24,396 @@ securityDefinitions:
     type: basic
 security: 
   - BasicAuth: []
-
+paths:
+  /correntista:
+    post:
+      tags:
+      - Correntista
+      summary: "Cadastra um Correntista"
+      description: "Cadastra um novo Correntista."
+      operationId: "addCorrentista"
+      security:
+        - BasicAuth: []
+      consumes:
+        - application/json
+      produces: 
+        - application/json
+      parameters:
+      - in: header
+        name: Authorization
+        type: string
+        required: true
+      - in: body
+        name: "correntista_"
+        required: true
+        schema:
+          $ref: "#/definitions/Correntista"
+      responses:
+        201:
+          description: "Cadastro efetuado com sucesso"
+          schema:
+            $ref: '#/definitions/Correntista'
+        400:
+          description: "Requisição Inválida"
+        500:
+          description: "Erro interno no servidor"
+  /correntista/{correntistaId}:
+    get:
+      tags:
+      - Correntista
+      summary: "Busca um Correntista"
+      description: "Busca um Correntista através de um ID."
+      operationId: "getCorrentista"
+      security:
+        - BasicAuth: []
+      produces: 
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: path
+          name: "correntistaId"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: "Busca efetuada com sucesso."
+          schema:
+            $ref: '#/definitions/Correntista'
+        400:
+          description: "Requisição Inválida"
+        401:
+          description: "Requisição não autorizada"
+        500:
+          description: "Erro interno no servidor"
+    put:
+      tags:
+      - Correntista
+      summary: "Altera o nome do Correntista"
+      description: "Altera o nome de um Correntista cadastrado."
+      operationId: "updateCorrentista"
+      security:
+        - BasicAuth: []
+      produces: 
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: path
+          name: "correntistaId"
+          required: true
+          type: integer
+          format: int64
+        - in: query
+          name: nome
+          type: string
+          required: true
+      responses:
+        200:
+          description: "Busca efetuada com sucesso."
+          schema:
+            $ref: '#/definitions/Correntista'
+        400:
+          description: "Requisição Inválida"
+        401:
+          description: "Requisição não autorizada"
+        500:
+          description: "Erro interno no servidor"
+  /cc:
+    post:
+      tags:
+      - Conta
+      summary: "Cria Conta Corrente"
+      description: "Cria uma nova Conta Corrente"
+      operationId: "addConta"
+      security:
+        - BasicAuth: []
+      consumes:
+        - application/json
+      produces: 
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: body
+          name: "conta_"
+          schema:
+            $ref: "#/definitions/Conta"
+      responses:
+        201:
+          description: "Conta criada com sucesso"
+          schema:
+            $ref: '#/definitions/Conta'
+        400:
+          description: "Requisição Inválida"
+        500:
+          description: "Erro interno no servidor"
+  /cc/{agencia}/{numero}/{digito}/saldo:
+    get:
+      tags:
+      - Conta
+      summary: "Retorna o Saldo"
+      description: "Retorna o Saldo de uma Conta"
+      operationId: "getSaldo"
+      security:
+        - BasicAuth: []
+      produces: 
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: path
+          name: agencia
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: numero
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: digito
+          type: integer
+          format: int62
+          required: true
+      responses:
+        200:
+          description: "Consulta de Saldo efetuada com sucesso."
+          schema:
+            type: number
+            format: double
+        400:
+          description: "Requisição Inválida"
+        401:
+          description: "Requisição não autorizada"
+        404:
+          description: "Conta não encontrada"
+        500:
+          description: "Erro interno no servidor"
+  /cc/{agencia}/{numero}/{digito}/extrato:
+    get:
+      tags:
+      - Extrato
+      summary: "Retorna o Extrato"
+      description: "Retorna o Extrato de uma Conta"
+      operationId: "getExtrato"
+      security:
+        - BasicAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: path
+          name: agencia
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: numero
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: digito
+          type: integer
+          format: int62
+          required: true
+      responses:
+        200:
+          description: "Consulta de Extrato efetuada com sucesso."
+          schema:
+            $ref: '#/definitions/Extrato'
+        400:
+          description: "Requisição Inválida"
+        401:
+          description: "Requisição não autorizada"
+        404:
+          description: "Conta não encontrada"
+        500:
+          description: "Erro interno no servidor"
+  /cc/{agencia}/{numero}/{digito}/favorecido:
+    post:
+      tags:
+      - Favorecido
+      summary: "Cadastra um Favorecido"
+      description: "Cadastra um novo Favorecido em uma Conta."
+      operationId: "addFavorecido"
+      security:
+        - BasicAuth: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: path
+          name: agencia
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: numero
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: digito
+          type: integer
+          format: int62
+          required: true
+        - in: body
+          name: favorecido_
+          schema:
+            $ref: '#/definitions/Favorecido'
+      responses:
+        201:
+          description: "Favorecido cadastrado com sucesso"
+          schema:
+            $ref: '#/definitions/Favorecido'
+        400:
+          description: "Requisição Inválida"
+        500:
+          description: "Erro interno no servidor"
+  /cc/{agencia}/{numero}/{digito}/favorecido/{favorecidoId}:
+    get:
+      tags:
+      - Favorecido
+      summary: "Busca um Favorecido"
+      description: "Busca um Favorecido através de um ID."
+      operationId: "getFavorecido"
+      security:
+        - BasicAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: path
+          name: agencia
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: numero
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: digito
+          type: integer
+          format: int62
+          required: true
+        - in: path
+          name: favorecidoId
+          type: integer
+          format: int64
+          required: true
+      responses:
+        200:
+          description: "Busca efetuada com sucesso."
+          schema:
+            $ref: '#/definitions/Favorecido'
+        400:
+          description: "Requisição Inválida"
+        401:
+          description: "Requisição não autorizada"
+        404:
+          description: "Conta não encontrada"
+        500:
+          description: "Erro interno no servidor"
+    delete:
+      tags:
+      - Favorecido
+      summary: "Deleta um Favorecido"
+      description: "Deleta um Favorecido através do ID."
+      operationId: "deleteFavorecido"
+      security:
+        - BasicAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: path
+          name: agencia
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: numero
+          type: integer
+          format: int64
+          required: true
+        - in: path
+          name: digito
+          type: integer
+          format: int62
+          required: true
+        - in: path
+          name: favorecidoId
+          type: integer
+          format: int64
+          required: true
+      responses:
+        200:
+          description: "Favorecido deletado com sucesso"
+        400:
+          description: "Requisição Inválida"
+        401:
+          description: "Requisição não autorizada"
+        500:
+          description: "Erro interno no servidor"
+  /transacao:
+    post:
+      tags:
+      - Transacao
+      summary: "Cadastra uma Transação"
+      description: "Cadastra uma Transação de uma Conta" 
+      operationId: "addTransacao"
+      security:
+        - BasicAuth: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Autorization
+          type: string
+          required: true
+        - in: body
+          name: transacao_
+          schema:
+            $ref: '#/definitions/Transacao'
+      responses:
+        201:
+          description: "Transação criada com sucesso."
+          schema:
+            $ref: '#/definitions/Transacao'
+        400:
+          description: "Requisição Inválida"
+        500:
+          description: "Erro interno no servidor"
 definitions:
   Pessoa:
     type: object
