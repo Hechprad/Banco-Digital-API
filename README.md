@@ -6,6 +6,8 @@ Estudo de API realizada com Swagger
   - [Editor Swagger](http://editor.swagger.io/)
   - [Modelando APIs REST com Swagger - Caelum](https://blog.caelum.com.br/modelando-apis-rest-com-swagger/)
   - [Swagger na prática](https://klauslaube.com.br/2018/03/15/swagger-na-pratica.html) - Swagger + Open API Spec
+  - [Como interpretar um Swagger](https://medium.com/@ronilsonribeiro/como-interpretar-um-swagger-cdc331b68804)
+  - [O que é RESTful? Diferença entre REST e RESTful - DevMedia](https://www.youtube.com/watch?v=7Cbd8WBGrq4)
 ***
 ### Modelagem de uma API com Swagger de um banco digital:
 
