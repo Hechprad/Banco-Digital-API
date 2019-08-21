@@ -1,6 +1,11 @@
 # Banco Digital API
 
 Estudo de API realizada com Swagger
+
+ Links úteis
+  - [Editor Swagger](http://editor.swagger.io/)
+  - [Modelando APIs REST com Swagger - Caelum](https://blog.caelum.com.br/modelando-apis-rest-com-swagger/)
+  - [Swagger na prática](https://klauslaube.com.br/2018/03/15/swagger-na-pratica.html) - Swagger + Open API Spec
 ***
 ### Modelagem de uma API com Swagger de um banco digital:
 
