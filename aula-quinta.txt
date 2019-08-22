@@ -25,106 +25,138 @@ produces:
 consumes: 
   - application/json
 paths:
-  /health:
-    get:
-      summary: ""
-      description: ""
-      operationId: ""
-      parameters:
-        - in: body
-          name: ""
-          description: ""
-      responses:
-        200:
-          description: OK
-            schema:
-              type: "string"
   /contas:
     post:
-      summary: 
-      description: 
+      tags:
+        - contas
+      summary: "Cadastra uma Conta"
+      description: "Cadastra uma nova Conta"
+      operationId: "createAccount"
+      parameters:
+      - in: body
+        name: "request"
+        required: true
+        schema:
+          properties:
+            agencia:
+              type: integer
+            correntista: 
+              $ref: '#/definitions/Correntista'
       responses:
-        200:
-          description: OK
-  /contas/{agencia}/{conta}:
+        201:
+          description: "Conta-corrente criada com sucesso"
+          schema:
+            properties:
+              agencia:
+                type: number
+                format: int32
+              contaCorrente:
+                type: number
+                format: int32
+        400: # requisição inválida
+          description: "Parâmetros inválidos informados pelo cliente"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "Erro não mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+  /contas/{agencia}/{conta-corrente}:
     get:
-      summary: 
-      description: 
+      summary:  "Consulta de informações gerais da conta-corrente" 
+      operationId: "getAccountDetails"
+      parameters:
+      - $ref: '#/parameters/Agencia'
+      - $ref: '#/parameters/Conta'
       responses:
         200:
-          description: OK
-  /contas/{agencia}/{conta}/extrato:
+          description: "Sucesso"
+          schema:
+            properties:
+              saldo:
+                type: number
+                format: float32
+    
+        
+  /health:
     get:
-      summary: 
-      description: 
+      summary: "Rota de healthcheck da aplicacao"
+      operationId: "health"
       responses:
         200:
-          description: OK
-  /contas/{agencia}/{conta}/favorecidos:
-    post:
-      summary: 
-      description: 
-      responses:
-        200:
-          description: OK
-  /contas/{agencia}/{conta}/favorecidos/{id}:
-    delete:
-      summary: 
-      description: 
-      responses:
-        200:
-          description: OK
-  /contas/{agencia}/{conta}/transferencias:
-    post:
-      summary: 
-      description: 
-      responses:
-        200:
-          description: OK
-  /contas/{agencia}/{conta}/transferencias:  
-    get:
-      summary: 
-      description: 
-      responses:
-        200:
-          description: OK
-      
+          description: "API funcionando"
+          schema:
+            properties:
+               version:
+                 type: string
+               environment:
+                 type: string
 definitions:
-  Conta:
+  Correntista:
     type: object
-    description: ""
     properties:
+      nome:
+        type: string
+      sobrenome:
+        type: string
     
+  ResponseError:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      cause:
+        required: false
+        type: object
+        properties:
+          
+  
+  ResponseMeta:
+    type: object
+    properties:
+      version:
+        type: string
+      timestamp:
+        type: string
+        format: date-time
+      hostname:
+        type: string
+      numberOfRecords:
+        type: integer
+        format: int32
+parameters:
+  Agencia:
+    in: path
+    name: agencia
+    type: number
+    format: int32
     
+  Conta:
+    in: path
+    name: conta-corrente
+    type: number
+    format: int32
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  Page:
+    in: query
+    name: page
+    type: number
+    format: int32
+    default: 1
+  
+  Size:
+    in: query
+    name: size
+    type: number
+    format: int32
+    default: 20
+  
+  
+  
