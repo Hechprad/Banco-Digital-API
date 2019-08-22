@@ -15,9 +15,14 @@ produces:
   - "application/json"
 schemes:
 - "https"
+tags: 
+  - "Contas"
+  - "Favorecidos"
 paths:
   /contas:
     post:
+      tags:
+        - "Contas"
       summary: "Rota de abertura de conta corrente"
       operationId: "createAccount"
       parameters:
@@ -56,6 +61,8 @@ paths:
       
   /contas/{agencia}/{conta-corrente}:
     get:
+      tags:
+        - "Contas"
       summary: "Consulta de informações gerais da conta-corrente"
       operationId: "getAccountDetails"
       parameters:
@@ -105,11 +112,27 @@ paths:
   
   /contas/{agencia}/{conta-corrente}/extrato:
     get:
+      tags:
+        - "Contas"
       summary: "Retorna as informações do Extrato"
       operationId: "getExtrato"
       parameters:
         - $ref: '#/parameters/Agencia'
         - $ref: '#/parameters/Conta'
+        - in: query
+          description: "data inicial das transações para gerar o Extrato"
+          name: data-inicial
+          type: string
+          format: date
+          required: true
+        - in: query
+          description: "Data final das transações para gerar o Extrato"
+          name: data-final
+          type: string
+          format: date
+          required: true
+        - $ref: '#/parameters/Page'
+        - $ref: '#/parameters/Size'
       responses:
         200:
           description: "sucesso"
@@ -134,6 +157,8 @@ paths:
         
   /contas/{agencia}/{conta-corrente}/favorecidos:
     post:
+      tags:
+        - "Favorecidos"
       summary: "Cadastra um favorecido"
       operationId: "createFavored"
       parameters:
@@ -143,9 +168,7 @@ paths:
           name: "request"
           required: true
           schema:
-            properties:
-              dados-favorecido:
-                $ref: '#/definitions/Favorecido'
+            $ref: '#/definitions/Favorecido'
       responses:
         201:
           description: "Favorecido cadastrado com suecesso"
@@ -240,7 +263,7 @@ definitions:
         format: double
       data:
         type: string
-        format: data-time
+        format: date-time
       favorecido:
         $ref: '#/definitions/Favorecido'
   
