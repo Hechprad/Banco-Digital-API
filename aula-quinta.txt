@@ -1,36 +1,24 @@
 swagger: "2.0"
 info:
-  description: "Banco Digital API com cadastro de contas, clientes, favorecidos, consultas de strato, saldo"
+  description: "Sciensa Bank API"
   version: "1.0.0"
-  title: "Banco Digital API"
+  title: "API de correntistas do Sciensa Bank"
   termsOfService: "http://swagger.io/terms/"
   contact:
-    email: "hecherat@gmail.com"
+    email: "apiteam@swagger.io"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "localhost:8080"
-basePath: "/banco-digital-api/v2"
-tags:
-- name: "contas"
-  description: "Tudo sobre contas"
-- name: "favorecidos"
-  description: "Tudo sobre favorecidos"
-- name: "transferencias"
-  description: "Tudo sobre Transferencias"
+host: "petstore.swagger.io"
+basePath: "/api/v1"
+produces:
+  - "application/json"
 schemes:
 - "https"
-produces: 
-  - application/json
-consumes: 
-  - application/json
 paths:
   /contas:
     post:
-      tags:
-        - contas
-      summary: "Cadastra uma Conta"
-      description: "Cadastra uma nova Conta"
+      summary: "Rota de abertura de conta corrente"
       operationId: "createAccount"
       parameters:
       - in: body
@@ -40,8 +28,8 @@ paths:
           properties:
             agencia:
               type: integer
-            correntista: 
-              $ref: '#/definitions/Correntista'
+            correntista:
+              $ref: "#/definitions/Correntista"
       responses:
         201:
           description: "Conta-corrente criada com sucesso"
@@ -53,53 +41,85 @@ paths:
               contaCorrente:
                 type: number
                 format: int32
-        400: # requisição inválida
-          description: "Parâmetros inválidos informados pelo cliente"
+        400:
+          description: "parâmetros inválidos informados pelo cliente"
           schema:
-            $ref: '#/definitions/ResponseError'
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "agência informada não encontrada"
+          schema:
+            $ref: "#/definitions/ResponseError"
         500:
-          description: "Erro não mapeado"
+          description: "erro não mapeado"
           schema:
-            $ref: '#/definitions/ResponseError'
+            $ref: "#/definitions/ResponseError"
+      
   /contas/{agencia}/{conta-corrente}:
     get:
-      summary:  "Consulta de informações gerais da conta-corrente" 
+      summary: "Consulta de informações gerais da conta-corrente"
       operationId: "getAccountDetails"
       parameters:
-      - $ref: '#/parameters/Agencia'
-      - $ref: '#/parameters/Conta'
+      - $ref: "#/parameters/Agencia"
+      - $ref: "#/parameters/Conta"
       responses:
         200:
-          description: "Sucesso"
+          description: "sucesso"
           schema:
             properties:
               saldo:
                 type: number
                 format: float32
-    
-        
+              limites:
+                type: object
+                properties:
+                  cartaoCredito:
+                    type: object
+                    properties:
+                      limite:
+                        type: number
+                        format: float32
+                      utilizado:
+                        type: number
+                        format: float32
+                  chequeEspecial:
+                    type: object
+                    properties:
+                      limite:
+                        type: number
+                        format: float32
+                      utilizado:
+                        type: number
+                        format: float32
+        400:
+          description: "parâmetros inválidos informados pelo cliente"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "conta-corrente não encontrada"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        500:
+          description: "erro não mapeado"
+          schema:
+            $ref: "#/definitions/ResponseError"
+
+
   /health:
     get:
-      summary: "Rota de healthcheck da aplicacao"
+      summary: "Rota de healthcheck da aplicação"
       operationId: "health"
       responses:
         200:
           description: "API funcionando"
           schema:
             properties:
-               version:
-                 type: string
-               environment:
-                 type: string
+              version:
+                type: string
+              environment:
+                type: string
+      
+
 definitions:
-  Correntista:
-    type: object
-    properties:
-      nome:
-        type: string
-      sobrenome:
-        type: string
-    
   ResponseError:
     type: object
     properties:
@@ -113,11 +133,15 @@ definitions:
         items:
           type: string
       cause:
-        required: false
         type: object
         properties:
-          
-  
+          name:
+            type: string
+          code:
+            type: number
+          message:
+            type: string
+
   ResponseMeta:
     type: object
     properties:
@@ -131,19 +155,38 @@ definitions:
       numberOfRecords:
         type: integer
         format: int32
+      page:
+        type: integer
+        format: int32
+      size:
+        type: integer
+        format: int32
+  
+  Correntista:
+    type: object
+    properties:
+      nome:
+        type: string
+      sobreNome:
+        type: string
+      cpf:
+        type: integer
+
 parameters:
   Agencia:
     in: path
-    name: agencia
+    name: "agencia"
     type: number
     format: int32
-    
+    required: true
+
   Conta:
     in: path
-    name: conta-corrente
+    name: "conta-corrente"
     type: number
     format: int32
-    
+    required: true
+
   Page:
     in: query
     name: page
@@ -157,6 +200,7 @@ parameters:
     type: number
     format: int32
     default: 20
-  
-  
-  
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
