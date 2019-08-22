@@ -9,9 +9,11 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
-basePath: "/api/v1"
+host: "localhost:8080"
+basePath: "/sciensa-bank-api/v1"
 produces:
+  - "application/json"
+consumes: 
   - "application/json"
 schemes:
 - "https"
