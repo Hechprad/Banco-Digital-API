@@ -68,7 +68,7 @@ paths:
             properties:
               saldo:
                 type: number
-                format: float32
+                format: double
               limites:
                 type: object
                 properties:
@@ -77,19 +77,19 @@ paths:
                     properties:
                       limite:
                         type: number
-                        format: float32
+                        format: double
                       utilizado:
                         type: number
-                        format: float32
+                        format: double
                   chequeEspecial:
                     type: object
                     properties:
                       limite:
                         type: number
-                        format: float32
+                        format: double
                       utilizado:
                         type: number
-                        format: float32
+                        format: double
         400:
           description: "parâmetros inválidos informados pelo cliente"
           schema:
@@ -102,8 +102,68 @@ paths:
           description: "erro não mapeado"
           schema:
             $ref: "#/definitions/ResponseError"
-
-
+  
+  /contas/{agencia}/{conta-corrente}/extrato:
+    get:
+      summary: "Retorna as informações do Extrato"
+      operationId: "getExtrato"
+      parameters:
+        - $ref: '#/parameters/Agencia'
+        - $ref: '#/parameters/Conta'
+      responses:
+        200:
+          description: "sucesso"
+          schema:
+            properties:
+              transacoes:
+                type: array
+                items:
+                  $ref: '#/definitions/Transacao'
+        400:
+          description: "parâmetros inválidos informados pelo cliente"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "conta-corrente não encontrada"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        500:
+          description: "erro não mapeado"
+          schema:
+            $ref: "#/definitions/ResponseError"        
+        
+  /contas/{agencia}/{conta-corrente}/favorecidos:
+    post:
+      summary: "Cadastra um favorecido"
+      operationId: "createFavored"
+      parameters:
+        - $ref: '#/parameters/Agencia'
+        - $ref: '#/parameters/Conta'
+        - in: body
+          name: "request"
+          required: true
+          schema:
+            properties:
+              dados-favorecido:
+                $ref: '#/definitions/Favorecido'
+      responses:
+        201:
+          description: "Favorecido cadastrado com suecesso"
+          schema:
+            $ref: '#/definitions/Favorecido'
+        400:
+          description: "parâmetros inválidos informados pelo cliente"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "conta-corrente não encontrada"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        500:
+          description: "erro não mapeado"
+          schema:
+            $ref: "#/definitions/ResponseError"
+    
   /health:
     get:
       summary: "Rota de healthcheck da aplicação"
@@ -171,6 +231,37 @@ definitions:
         type: string
       cpf:
         type: integer
+  
+  Transacao:
+    type: object
+    properties:
+      valor:
+        type: number
+        format: double
+      data:
+        type: string
+        format: data-time
+      favorecido:
+        $ref: '#/definitions/Favorecido'
+  
+  Favorecido:
+    type: object
+    properties:
+      agencia:
+        type: integer
+        format: int32
+      conta:
+        type: integer
+        format: int32
+      nome:
+        type: string
+      cpf:
+        type: string
+        maxLength: 11
+        minLength: 11
+      banco:
+        type: string
+        
 
 parameters:
   Agencia:
