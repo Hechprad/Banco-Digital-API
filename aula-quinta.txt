@@ -16,8 +16,8 @@ produces:
 schemes:
 - "https"
 tags: 
-  - "Contas"
-  - "Favorecidos"
+  - name: "Contas"
+  - name: "Favorecidos"
 paths:
   /contas:
     post:
