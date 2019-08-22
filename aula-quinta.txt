@@ -1,0 +1,130 @@
+swagger: "2.0"
+info:
+  description: "Banco Digital API com cadastro de contas, clientes, favorecidos, consultas de strato, saldo"
+  version: "1.0.0"
+  title: "Banco Digital API"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "hecherat@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/banco-digital-api/v2"
+tags:
+- name: "contas"
+  description: "Tudo sobre contas"
+- name: "favorecidos"
+  description: "Tudo sobre favorecidos"
+- name: "transferencias"
+  description: "Tudo sobre Transferencias"
+schemes:
+- "https"
+produces: 
+  - application/json
+consumes: 
+  - application/json
+paths:
+  /health:
+    get:
+      summary: ""
+      description: ""
+      operationId: ""
+      parameters:
+        - in: body
+          name: ""
+          description: ""
+      responses:
+        200:
+          description: OK
+            schema:
+              type: "string"
+  /contas:
+    post:
+      summary: 
+      description: 
+      responses:
+        200:
+          description: OK
+  /contas/{agencia}/{conta}:
+    get:
+      summary: 
+      description: 
+      responses:
+        200:
+          description: OK
+  /contas/{agencia}/{conta}/extrato:
+    get:
+      summary: 
+      description: 
+      responses:
+        200:
+          description: OK
+  /contas/{agencia}/{conta}/favorecidos:
+    post:
+      summary: 
+      description: 
+      responses:
+        200:
+          description: OK
+  /contas/{agencia}/{conta}/favorecidos/{id}:
+    delete:
+      summary: 
+      description: 
+      responses:
+        200:
+          description: OK
+  /contas/{agencia}/{conta}/transferencias:
+    post:
+      summary: 
+      description: 
+      responses:
+        200:
+          description: OK
+  /contas/{agencia}/{conta}/transferencias:  
+    get:
+      summary: 
+      description: 
+      responses:
+        200:
+          description: OK
+      
+definitions:
+  Conta:
+    type: object
+    description: ""
+    properties:
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
