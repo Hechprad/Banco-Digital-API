@@ -1,0 +1,339 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: "Sciensa - Filmes API"
+  description: "API para catalogar, buscar e alterar filmes"
+  termsOfService: "/sciensa-filmes-api/v1/terms"
+  contact:
+    name: "Jorge Hecherat"
+    url: "sciensa-filmes-api/v1/contact"
+    email: "hecherat@gmail.com"
+  license:
+    name: "MIT"
+    url: "http://opensource.org/licenses/MIT"
+host: "localhost:8080"
+basePath: "/sciensa-filmes-api/v1"
+tags:
+  - name: "Filmes"
+  - name: "Healthcheck"
+produces: 
+  - application/json
+consumes: 
+  - application/json
+schemes: 
+  - https
+securityDefinitions:
+ BasicAuth:
+  type: basic
+security: 
+  - BasicAuth: []
+paths:
+  /filmes: #POST #GET
+    post:
+      tags:
+        - "Filmes"
+      summary: "Cadastra um Filme"
+      description: "Cadastra um novo Filme"
+      operationId: "addFilme"
+      parameters:
+        - in: body
+          name: "request"
+          required: true
+          schema:
+            $ref: '#/definitions/Filme'
+        - $ref: '#/parameters/Page'
+        - $ref: "#/parameters/Size"
+      responses:
+        201:
+          description: "Ok - Filme cadastrado com sucesso"
+          schema:
+            $ref: '#/definitions/Filme'
+        400:
+          description: "Bad Request - Parâmetros informados pelo cliente são inválidos"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        401:
+          description: "Unauthorized - Não autorizado, efetue o login"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        403:
+          description: "Forbidden - Não possui permissão"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "Not Found - Filme não encontrado"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        500:
+          description: "Internal Server Error - Erro não mapeado"
+          schema:
+            $ref: "#/definitions/ResponseError"
+  
+    get:
+      tags:
+        - "Filmes"
+      summary: "Retorna lista de Filmes cadastrados"
+      description: "Retorna lista de filmes cadastrados com o número de páginas e itens por página"
+      operationId: "getFilmes"
+      parameters:
+        - $ref: '#/parameters/Page'
+        - $ref: '#/parameters/Size'
+      responses:
+        200:
+          description: "Ok - Busca efetuada com sucesso"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Filme'
+        400:
+          description: "Bad Request - Parâmetros informádos são inválidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        401:
+          description: "Unauthorized - Não autorizado, efetue o login"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        403:
+          description: "Forbidden - Não possui permissão"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "Not Found - Filme não encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "Internal Server Error - Erro não mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+    
+  /filmes/{id}: #GET #PUT #PATCH #DELETE
+    get:
+      tags:
+        - "Filmes"
+      summary: "Retorna um Filme específico"
+      description: "Retorna um filme de acordo com o ID fornecido"
+      operationId: "getFilme"
+      parameters:
+        - $ref: '#/parameters/Id'
+      responses:
+        200:
+          description: "Ok - Busca efetuada com sucesso"
+          schema:
+            $ref: '#/definitions/Filme'
+        400:
+          description: "Bad Request - Parâmetros informádos são inválidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        401:
+          description: "Unauthorized - Não autorizado, efetue o login"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        403:
+          description: "Forbidden - Não possui permissão"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "Not Found - Filme não encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "Internal Server Error - Erro não mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+  
+    put:
+      tags:
+        - "Filmes"
+      summary: "Atualiza um Filme"
+      description: "Atualiza os dados de um Filme cadastrado"
+      operationId: "updateFilme"
+      parameters:
+        - $ref: '#/parameters/Id'
+        - in: body
+          name: "request"
+          schema:
+            $ref: '#/definitions/Filme'
+      responses:
+        200:
+          description: "Ok - Filme atualizado com sucesso"
+          schema:
+            $ref: '#/definitions/Filme'
+        400:
+          description: "Bad Request - Parâmetros informádos são inválidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        401:
+          description: "Unauthorized - Não autorizado, efetue o login"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        403:
+          description: "Forbidden - Não possui permissão"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "Not Found - Filme não encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "Internal Server Error - Erro não mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+    
+    patch:
+      tags:
+          - "Filmes"
+      summary: "Atualiza o Poster de um Filme de acordo com o ID fornecido"
+      description:  "Modifica a URL do Poster"
+      operationId: "updatePoster"
+      parameters:
+        - $ref: '#/parameters/Id'
+        - in: body
+          name: "request"
+          schema:
+            properties:
+              urlPoster:
+                type: string
+      responses:
+        200:
+          description: "Ok - Poster alterado com sucesso"
+          schema:
+            $ref: '#/definitions/Filme'
+        400:
+          description: "Bad Request - Parâmetros informádos são inválidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        401:
+          description: "Unauthorized - Não autorizado, efetue o login"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        403:
+          description: "Forbidden - Não possui permissão"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "Not Found - Filme não encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "Internal Server Error - Erro não mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+    
+    delete:
+      tags:
+        - "Filmes"
+      summary: "Deleta um Filme"
+      description: "Deleta um Filme cadastrado de acordo com o ID fornecido"
+      operationId: "deleteFilme"
+      parameters:
+        - $ref: '#/parameters/Id'
+      responses:
+        200:
+          description: "Ok - Filme deletado com sucesso"
+        400:
+          description: "Bad Request - Parâmetros informádos são inválidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        401:
+          description: "Unauthorized - Não autorizado, efetue o login"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        403:
+          description: "Forbidden - Não possui permissão"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "Not Found - Filme não encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "Internal Server Error - Erro não mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+    
+  /health:
+    get:
+      tags:
+        - "Healthcheck"
+      summary: "Healthcheck da aplicação"
+      operationId: "health"
+      description: "Rota de healthcheck da aplicação"
+      responses:
+        200:
+          description: "API funcionando"
+          schema:
+            properties:
+              version:
+                type: string
+              environment:
+                type: string
+    
+definitions:
+  Filme:
+    type: object
+    description: "Objeto filme"
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 1
+      nome:
+        type: string
+      categoria:
+        type: string
+        enum: 
+          - "Terror"
+          - "Comédia"
+          - "Romance"
+          - "Ficção"
+          - "Aventura"
+      ano:
+        type: integer
+        format: int32
+        example: 1990
+      urlPoster:
+        type: string
+  
+  ResponseError:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      cause:
+        type: object
+        properties:
+          name:
+            type: string
+          code:
+            type: integer
+          message:
+            type: string
+        
+parameters:
+  Page:
+    in: query
+    name: "page"
+    type: integer
+    format: int32
+    default: 1
+    
+  Size:
+    in: query
+    name: "size"
+    type: integer
+    format: int32
+    default: 20
+    
+  Id:
+    in: path
+    name: "id"
+    type: integer
+    format: int32
+    required: true
