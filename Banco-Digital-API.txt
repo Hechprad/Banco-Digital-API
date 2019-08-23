@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: "Administra a movimentação bancária do correntista e controla o acesso através de CPF e senha."
+  description: "Administra a movimentaï¿½ï¿½o bancï¿½ria do correntista e controla o acesso atravï¿½s de CPF e senha."
   version: "1.0.0"
   title: "Banco Digital API"
   termsOfService: "http:localhost:8085/banco-digital-api/v1/termo-uso"
@@ -54,7 +54,7 @@ paths:
           schema:
             $ref: '#/definitions/Correntista'
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         500:
           description: "Erro interno no servidor"
   /correntista/{correntistaId}:
@@ -62,7 +62,7 @@ paths:
       tags:
       - Correntista
       summary: "Busca um Correntista"
-      description: "Busca um Correntista através de um ID."
+      description: "Busca um Correntista atravï¿½s de um ID."
       operationId: "getCorrentista"
       security:
         - BasicAuth: []
@@ -84,9 +84,9 @@ paths:
           schema:
             $ref: '#/definitions/Correntista'
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         401:
-          description: "Requisição não autorizada"
+          description: "Requisiï¿½ï¿½o nï¿½o autorizada"
         500:
           description: "Erro interno no servidor"
     put:
@@ -121,9 +121,9 @@ paths:
           schema:
             $ref: '#/definitions/Correntista'
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         401:
-          description: "Requisição não autorizada"
+          description: "Requisiï¿½ï¿½o nï¿½o autorizada"
         500:
           description: "Erro interno no servidor"
   /cc:
@@ -154,7 +154,7 @@ paths:
           schema:
             $ref: '#/definitions/Conta'
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         500:
           description: "Erro interno no servidor"
   /cc/{agencia}/{numero}/{digito}/saldo:
@@ -195,11 +195,11 @@ paths:
             type: number
             format: double
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         401:
-          description: "Requisição não autorizada"
+          description: "Requisiï¿½ï¿½o nï¿½o autorizada"
         404:
-          description: "Conta não encontrada"
+          description: "Conta nï¿½o encontrada"
         500:
           description: "Erro interno no servidor"
   /cc/{agencia}/{numero}/{digito}/extrato:
@@ -239,11 +239,11 @@ paths:
           schema:
             $ref: '#/definitions/Extrato'
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         401:
-          description: "Requisição não autorizada"
+          description: "Requisiï¿½ï¿½o nï¿½o autorizada"
         404:
-          description: "Conta não encontrada"
+          description: "Conta nï¿½o encontrada"
         500:
           description: "Erro interno no servidor"
   /cc/{agencia}/{numero}/{digito}/favorecido:
@@ -289,7 +289,7 @@ paths:
           schema:
             $ref: '#/definitions/Favorecido'
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         500:
           description: "Erro interno no servidor"
   /cc/{agencia}/{numero}/{digito}/favorecido/{favorecidoId}:
@@ -297,7 +297,7 @@ paths:
       tags:
       - Favorecido
       summary: "Busca um Favorecido"
-      description: "Busca um Favorecido através de um ID."
+      description: "Busca um Favorecido atravï¿½s de um ID."
       operationId: "getFavorecido"
       security:
         - BasicAuth: []
@@ -334,18 +334,18 @@ paths:
           schema:
             $ref: '#/definitions/Favorecido'
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         401:
-          description: "Requisição não autorizada"
+          description: "Requisiï¿½ï¿½o nï¿½o autorizada"
         404:
-          description: "Conta não encontrada"
+          description: "Conta nï¿½o encontrada"
         500:
           description: "Erro interno no servidor"
     delete:
       tags:
       - Favorecido
       summary: "Deleta um Favorecido"
-      description: "Deleta um Favorecido através do ID."
+      description: "Deleta um Favorecido atravï¿½s do ID."
       operationId: "deleteFavorecido"
       security:
         - BasicAuth: []
@@ -378,17 +378,17 @@ paths:
         200:
           description: "Favorecido deletado com sucesso"
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         401:
-          description: "Requisição não autorizada"
+          description: "Requisiï¿½ï¿½o nï¿½o autorizada"
         500:
           description: "Erro interno no servidor"
   /transacao:
     post:
       tags:
       - Transacao
-      summary: "Cadastra uma Transação"
-      description: "Cadastra uma Transação de uma Conta" 
+      summary: "Cadastra uma Transaï¿½ï¿½o"
+      description: "Cadastra uma Transaï¿½ï¿½o de uma Conta" 
       operationId: "addTransacao"
       security:
         - BasicAuth: []
@@ -407,11 +407,11 @@ paths:
             $ref: '#/definitions/Transacao'
       responses:
         201:
-          description: "Transação criada com sucesso."
+          description: "Transaï¿½ï¿½o criada com sucesso."
           schema:
             $ref: '#/definitions/Transacao'
         400:
-          description: "Requisição Inválida"
+          description: "Requisiï¿½ï¿½o Invï¿½lida"
         500:
           description: "Erro interno no servidor"
 definitions:
@@ -544,3 +544,5 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Transacao'
+
+#teste pull request
